@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Secret Electricity</title>
+<meta name="description" content="What Secret Electricity apps do with your data: nothing leaves Atlassian infrastructure.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="site">
+  <a class="brand" href="/">Secret Electricity</a>
+  <nav>
+    <a href="/typelock/">TypeLock</a>
+    <a href="/support/">Support</a>
+    <a href="/privacy/">Privacy</a>
+  </nav>
+</header>
+
+<h1>Privacy Policy</h1>
+<p class="tagline">Last updated: 25 October 2026</p>
+
+<p>
+  This policy explains what Secret Electricity apps do with data. It applies to
+  TypeLock for Jira and to every app we publish on the Atlassian Marketplace.
+</p>
+
+<h2>Who is responsible</h2>
+
+<p>
+  These apps are provided by <strong>Secret Electricity</strong> ("we", "us"), not
+  by Atlassian. <strong>We, and not Atlassian, are responsible for the privacy,
+  security and integrity of any end user data processed by our apps.</strong>
+  Questions, requests and complaints come to us at
+  <a href="mailto:support@secretelectricity.studio">support@secretelectricity.studio</a>.
+</p>
+
+<h2>What our apps collect</h2>
+
+<div class="note">
+  <p>
+    <strong>No personal data.</strong> We operate no database, no external service
+    and no analytics, and we keep no record of any user.
+  </p>
+</div>
+
+<p>
+  TypeLock stores the settings of each rule an administrator creates. Those
+  settings live on the Jira workflow, inside your own Jira site:
+</p>
+
+<ul>
+  <li>the ID and name of the restricted work item type</li>
+  <li>the IDs and names of the permitted groups</li>
+  <li>the IDs and names of the permitted project roles</li>
+  <li>the error message the administrator chose to display</li>
+</ul>
+
+<p>
+  This configuration is stored by Jira, in Jira. We never receive a copy. It
+  describes groups and roles rather than individuals, and contains no names, email
+  addresses or account identifiers of your users.
+</p>
+
+<h2>What our apps read</h2>
+
+<p>
+  To let an administrator build a rule, the configuration screen reads the work item
+  types, groups and project roles that exist on your site. That data is displayed in
+  the form and is <strong>not stored, transmitted or retained</strong> once the
+  screen closes.
+</p>
+
+<p>
+  When someone creates a work item, Jira evaluates the rule against that person's
+  group and project role memberships. That evaluation happens <strong>inside
+  Jira</strong>. The app does not see, receive or record the result, and no user
+  identity ever reaches us.
+</p>
+
+<p>TypeLock holds these read-only permissions, and no others:</p>
+
+<table>
+  <tr><th>Permission</th><th>Purpose</th></tr>
+  <tr><td><code>read:issue-type:jira</code></td><td>List work item types in the configuration screen</td></tr>
+  <tr><td><code>read:avatar:jira</code>, <code>read:project-category:jira</code></td><td>Required by Jira's work item type endpoint</td></tr>
+  <tr><td><code>read:group:jira</code></td><td>List groups in the configuration screen</td></tr>
+  <tr><td><code>read:project-role:jira</code>, <code>read:project:jira</code></td><td>List project roles in the configuration screen</td></tr>
+</table>
+
+<p>
+  The app holds <strong>no write permission</strong>. It cannot create, modify or
+  delete anything in your Jira site.
+</p>
+
+<h2>Where data is processed</h2>
+
+<p>
+  <strong>Entirely within Atlassian's infrastructure.</strong> Our apps run on
+  Atlassian Forge, Atlassian's hosted platform. They make no network requests to any
+  third party, and no customer data leaves Atlassian's systems at any point.
+</p>
+
+<h2>What we do not collect</h2>
+
+<p>For the avoidance of doubt, our apps do not collect, store or transmit:</p>
+
+<ul>
+  <li>personal data of any kind</li>
+  <li>work item content, comments, attachments or field values</li>
+  <li>user names, email addresses, account IDs or profile data</li>
+  <li>usage analytics, telemetry or crash reports</li>
+  <li>IP addresses or device information</li>
+</ul>
+
+<p>Nothing is sent to any AI or machine learning service.</p>
+
+<h2>Sub-processors</h2>
+
+<p>
+  <strong>None.</strong> Because our apps transmit no data outside Atlassian's
+  infrastructure, they engage no sub-processors. Atlassian acts as the
+  infrastructure provider under its own terms with you.
+</p>
+
+<h2>Retention and deletion</h2>
+
+<p>
+  The only data our apps cause to exist is the rule configuration described above,
+  held by Jira on your workflow. It persists until an administrator deletes the rule
+  or the workflow. Uninstalling an app leaves that configuration in Jira, where you
+  control it; we hold no copy to delete.
+</p>
+
+<p>
+  Because we store no personal data, there is nothing for us to retain, export or
+  erase on request. Requests concerning data held in your Jira site are addressed to
+  Atlassian or to your site administrator.
+</p>
+
+<h2>Your rights under data protection law</h2>
+
+<p>
+  Rights of access, rectification, erasure, restriction, portability and objection
+  under the UK GDPR, the EU GDPR and comparable laws apply to personal data held by
+  a controller or processor. We hold none in connection with these apps. If you
+  believe otherwise, write to us and we will investigate and respond.
+</p>
+
+<h2>Security</h2>
+
+<p>
+  Our apps request the minimum permissions they need, and prefer read-only access.
+  TypeLock's enforcement logic runs as a Jira expression evaluated by Jira, not in a
+  browser, so it cannot be bypassed by a modified client. There is no server of ours
+  to breach and no stored credentials.
+</p>
+
+<p>
+  Vulnerability reports are welcome at
+  <a href="mailto:support@secretelectricity.studio">support@secretelectricity.studio</a>
+  and will be acknowledged promptly.
+</p>
+
+<h2>Changes to this policy</h2>
+
+<p>
+  Material changes appear here with a revised date. Where a change affects how data
+  is handled, we will note it in the app's Marketplace listing.
+</p>
+
+<h2>Contact</h2>
+
+<p>
+  Secret Electricity<br>
+  <a href="mailto:support@secretelectricity.studio">support@secretelectricity.studio</a>
+</p>
+
+<footer class="site">
+  <p>
+    Secret Electricity ·
+    <a href="/support/">Support</a> ·
+    <a href="/privacy/">Privacy</a>
+  </p>
+</footer>
+
+</div>
+</body>
+</html>

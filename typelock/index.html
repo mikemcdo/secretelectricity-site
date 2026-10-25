@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TypeLock for Jira — Secret Electricity</title>
+<meta name="description" content="Restrict who may create a specific Jira work item type, by group or project role, enforced on the workflow.">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap">
+
+<header class="site">
+  <a class="brand" href="/">Secret Electricity</a>
+  <nav>
+    <a href="/typelock/">TypeLock</a>
+    <a href="/support/">Support</a>
+    <a href="/privacy/">Privacy</a>
+  </nav>
+</header>
+
+<h1>TypeLock for Jira</h1>
+<p class="tagline">
+  Restrict who may create a specific work item type, by group or project role.
+</p>
+
+<p>
+  Jira grants <strong>Create Issues</strong> at the project level: anyone who can
+  file a Bug can also create an Epic. TypeLock narrows that to a single work item
+  type, so everyone can raise Bugs and Tasks while Epics stay with the people who
+  own the roadmap.
+</p>
+
+<div class="note">
+  <p>
+    <strong>The rule is enforced, not hidden.</strong> TypeLock adds a validator to
+    the workflow's Create transition, which Jira evaluates server-side. The
+    restriction holds whether the work item is created through the Jira interface,
+    the REST API, or Jira Automation.
+  </p>
+</div>
+
+<h2>Requirements</h2>
+
+<table>
+  <tr><th>Requirement</th><th>Detail</th></tr>
+  <tr><td>Jira</td><td>Jira Cloud</td></tr>
+  <tr><td>Project type</td><td>Company-managed projects</td></tr>
+  <tr><td>Permission</td><td>Jira administrator, to edit workflows</td></tr>
+</table>
+
+<p>
+  Team-managed projects use a different workflow editor and are not supported.
+</p>
+
+<h2>Setting up a rule</h2>
+
+<p>
+  A rule lives on a workflow, so it applies to every project using that workflow.
+  Set one up like this:
+</p>
+
+<h3>1. Open the workflow</h3>
+<p>
+  Go to <strong>Project settings → Workflows</strong> for the project you want to
+  restrict, and edit the workflow it uses.
+</p>
+<p>
+  You can also reach it from <strong>Settings → Issues → Workflows</strong>, but
+  opening it from the project is better: the project-role picker only populates
+  when Jira knows which project you mean. See
+  <a href="#roles">restricting by project role</a> below.
+</p>
+
+<h3>2. Select the Create transition</h3>
+<p>
+  Switch to <strong>Text</strong> view, which lists transitions as rows, and select
+  <strong>Create</strong> — the transition from <em>Start</em> to your first status.
+  The diagram view works too, but the connector is a thin line and easy to miss.
+</p>
+
+<h3>3. Add the rule</h3>
+<p>
+  Under <strong>Rules</strong>, choose <strong>View all</strong>, then
+  <strong>Add rule</strong>. Pick <strong>TypeLock work item type restriction</strong>
+  and choose <strong>Select</strong>.
+</p>
+
+<h3>4. Configure it</h3>
+<table>
+  <tr><th>Field</th><th>What it does</th></tr>
+  <tr>
+    <td>Restricted work item type</td>
+    <td>The one type this rule governs. Every other type is unaffected.</td>
+  </tr>
+  <tr>
+    <td>Allowed groups</td>
+    <td>Members of any selected group may create it.</td>
+  </tr>
+  <tr>
+    <td>Allowed project roles</td>
+    <td>Holders of any selected role may create it.</td>
+  </tr>
+  <tr>
+    <td>Error message</td>
+    <td>Shown to anyone whose attempt is blocked. Say who to ask.</td>
+  </tr>
+</table>
+
+<p>
+  Groups and roles combine with <strong>or</strong>: a user is allowed if they are
+  in any selected group <em>or</em> hold any selected role. A rule with neither is
+  rejected when you save it, because it would block everyone.
+</p>
+
+<h3>5. Publish the workflow</h3>
+<p>
+  Choose <strong>Update workflow</strong>. Nothing is enforced until you do — a
+  draft has no effect.
+</p>
+
+<h2 id="roles">Restricting by project role</h2>
+
+<p>
+  The project-role list is populated only when the workflow is opened from a
+  project's own settings. Opened from site administration, the picker is empty and
+  says so.
+</p>
+
+<p>
+  The reason is that a workflow belongs to no single project — several may share
+  it — so at site level there is no correct answer to "which project's roles?".
+  Reading the list another way would require broad permissions over your user
+  directory, which this app deliberately does not request.
+</p>
+
+<p>
+  Enforcement is unaffected either way. When someone creates a work item, Jira
+  evaluates the rule against that project's roles.
+</p>
+
+<h2>What users see when blocked</h2>
+
+<p>
+  Your configured message, in the create dialog. Through the REST API the request
+  fails with HTTP 400 and the message in <code>errorMessages</code>. In Jira
+  Automation the rule run is marked failed and the message appears in the
+  automation audit log.
+</p>
+
+<h2>Things worth knowing</h2>
+
+<h3>Administrators are not exempt</h3>
+<p>
+  A rule restricting Epics restricts them for everyone outside the allowlist,
+  including Jira administrators and the person who wrote the rule. This is
+  deliberate — an exemption would be a hole in the control. Add yourself to an
+  allowed group if you need to create the type.
+</p>
+
+<h3>Automation is not exempt either</h3>
+<p>
+  A Jira Automation rule that creates a restricted work item type will fail unless
+  the rule's actor is in an allowed group or role. If you have automation that
+  creates Epics, set its actor to an allowed user, or add that account to an
+  allowed group, before enabling a rule.
+</p>
+
+<h3>Renaming a group does not break a rule</h3>
+<p>
+  Rules store group and role IDs, not names. Renaming a group leaves the rule
+  working. Deleting one removes it from the rule, and if it was the only entry, the
+  rule then blocks everyone — by design, rather than silently lapsing.
+</p>
+
+<h3>One rule per transition</h3>
+<p>
+  Each rule restricts one work item type. To restrict two types, add two rules to
+  the same Create transition.
+</p>
+
+<h2>Removing a rule</h2>
+
+<p>
+  Open the Create transition, choose <strong>View all</strong> under Rules, use the
+  <strong>⋯</strong> menu on the TypeLock rule and choose <strong>Delete rule</strong>,
+  then <strong>Update workflow</strong> to publish. The restriction lifts
+  immediately.
+</p>
+
+<h2>Privacy and permissions</h2>
+
+<p>
+  TypeLock holds read-only permissions and cannot create, change or delete anything
+  in your Jira site. It stores no personal data, runs no external service, and
+  sends nothing outside Atlassian's infrastructure. Full detail is in the
+  <a href="/privacy/">privacy policy</a>.
+</p>
+
+<h2>Support</h2>
+
+<p>
+  <a href="mailto:support@secretelectricity.studio">support@secretelectricity.studio</a>
+  — see <a href="/support/">support</a> for what to include in a report.
+</p>
+
+<footer class="site">
+  <p>
+    Secret Electricity ·
+    <a href="/support/">Support</a> ·
+    <a href="/privacy/">Privacy</a>
+  </p>
+</footer>
+
+</div>
+</body>
+</html>

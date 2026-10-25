@@ -1,0 +1,9 @@
+# GitHub Pages build settings.
+# `remote_theme` is not used: the site ships its own layout so that it renders
+# identically whether built by Pages or opened locally.
+title: Secret Electricity
+description: Focused utilities for Atlassian Jira.
+url: https://secretelectricity.studio
+plugins: []
+exclude:
+  - README.md
